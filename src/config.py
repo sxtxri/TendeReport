@@ -49,6 +49,14 @@ class Settings(ConfigSettings):
     # Настройки сервера
     server: ServerSettings = Field(default_factory=ServerSettings)
 
+    @property
+    def is_local(self) -> bool:
+        return self.ENV == "local"
+
+    @property
+    def is_test_env(self) -> bool:  # noqa: FNE002
+        return self.ENV == "test"
+
     @field_validator("POSTGRES_DSN", mode="before")
     @classmethod
     def assemble_postgres_dsn(cls, value: str | None, info: ValidationInfo) -> str:
