@@ -1,8 +1,10 @@
 __all__ = ["TenderModel"]
 
 from datetime import datetime
-from sqlalchemy import String, Text, Integer, DateTime, func, ARRAY
+
+from sqlalchemy import ARRAY, DateTime, Integer, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column
+
 from infrastructure.db.models.base import ModelBase
 
 
@@ -17,15 +19,11 @@ class TenderModel(ModelBase):
     tags: Mapped[list[str] | None] = mapped_column(ARRAY(String(100)), nullable=True)
     scoring: Mapped[int | None] = mapped_column(Integer, nullable=True)
 
-    # дата публикации тендера
     published_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
-    # время создания записи
     created_at: Mapped[datetime] = mapped_column(
         DateTime, default=func.now(), server_default=func.now(), nullable=False
     )
-
-    # время обновления записи
     updated_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=func.now(),

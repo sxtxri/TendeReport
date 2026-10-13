@@ -1,0 +1,70 @@
+[flake8]
+max-line-length = 120
+
+ignore =
+    R504,
+    CCE001,
+    PIE786,
+    G200,
+    FNE007,
+    Q444,
+    ASN001,
+    U100,
+    FNE003,
+    PIE781,
+    PIE798,
+    PIE789,
+    R506,
+    R505,
+    Q449,
+    A003,
+    A001,
+    Q447,
+    VNE003,
+    E501,
+    FP003,
+    FS003,
+    AAA01,
+    PT006,
+    PT004,
+    SIM119,
+    SIM106,
+    FP005,
+    W503,
+    E203,
+    CFQ002,
+    PT014,
+    ABS101
+
+per-file-ignores =
+    __init__.py: F401, F403 # imported but unused, 'from module import *' used; unable to detect undefined names
+    tests/*: ECE001, CFQ002
+
+extend-immutable-calls =
+    # Depends
+    Depends,
+    fastapi.Depends,
+    fastapi.params.Depends
+    # TODO: Form и File вообще под сомнением
+    # Form
+    Form,
+    fastapi.Form,
+    fastapi.params.Form
+    # File
+    File,
+    fastapi.File,
+    fastapi.params.File
+
+class_attributes_order =
+    field,
+    nested_class,
+    magic_method,
+    property_method,
+    static_method,
+    class_method,
+    method,
+    private_method,
+    meta_class,
+
+exclude =
+    src/infrastructure/db/migrations/*

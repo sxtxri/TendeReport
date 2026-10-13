@@ -50,7 +50,9 @@ def setup_unsuccessful_request_exception_handler(app):
                         message="UnSuccessfulRequestError",
                         errors=[
                             ErrorSchema(
-                                message=exc.msg[-100:] if len(exc.msg) >= 100 else exc.msg,
+                                message=(
+                                    exc.msg[-100:] if len(exc.msg) >= 100 else exc.msg
+                                ),
                                 reason="UnprocessableEntityError",
                             )
                         ],

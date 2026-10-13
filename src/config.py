@@ -1,8 +1,8 @@
 import os
-
-from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field
 from pathlib import Path
+
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class ConfigSettings(BaseSettings):
@@ -18,7 +18,7 @@ class ConfigSettings(BaseSettings):
 
 class ServerSettings(ConfigSettings):
     port: int = 8080
-    host: str = "0.0.0.0"
+    host: str = "127.0.0.1"
     model_config = SettingsConfigDict(env_prefix="SERVER_")
 
 

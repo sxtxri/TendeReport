@@ -1,3 +1,4 @@
+from asgi_correlation_id import correlation_id
 from pydantic import ConfigDict
 from starlette import status
 from starlette.requests import Request

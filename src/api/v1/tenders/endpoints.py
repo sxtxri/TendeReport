@@ -4,10 +4,8 @@ from fastapi import APIRouter, Depends
 from starlette import status
 
 from api.base.schemas.responses import ErrorAPIResponse, ObjectAPIResponse
-from queries.bootstrap import (
-    get_tender_service
-)
 from common.types import TenderId
+from queries.bootstrap import get_tender_service
 from queries.entities import Tender
 from queries.services import TenderService
 
@@ -23,15 +21,13 @@ tenders_router = APIRouter()
         status.HTTP_400_BAD_REQUEST: {"model": ErrorAPIResponse},
         status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": ErrorAPIResponse},
     },
-    tags=["Интервалы"],
+    tags=["Тендеры"],
 )
 async def find(
     tender_id: TenderId,
     service: Annotated[TenderService, Depends(get_tender_service)],
 ) -> ObjectAPIResponse[Tender] | ErrorAPIResponse:
 
-    tender: Tender = await service.get_tender(tender_id=tender_id)
+    tender: Tender | None = await service.get_tender(tender_id=tender_id)
 
-    return ObjectAPIResponse(
-        data=tender
-    )
+    return ObjectAPIResponse(data=tender)

@@ -9,11 +9,10 @@ install_all_deps:
 	poetry install --with=tests,develop
 
 run_api_worker:
-	@cd src/; \
-	poetry run python api_entrypoint.py --reload
+	poetry run python src/api_entrypoint.py --reload
 
 run_lint:
-	poetry run python -m isort . && poetry run python -m flake8 src/ tests/ --disable=ASYNC9,ASYNC102,ASYNC120
+	poetry run python -m isort . && poetry run python -m flake8 src/ tests/ --ignore=ASYNC9,ASYNC102,ASYNC120
 
 # создать миграции
 makemigration:

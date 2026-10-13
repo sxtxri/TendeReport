@@ -1,4 +1,4 @@
-all = ["Entity", "ValueObject"]
+__all__ = ["Entity", "ValueObject"]
 
 from abc import ABC, abstractmethod
 

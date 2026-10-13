@@ -1,4 +1,7 @@
-__all__ = ["UnprocessableEntityErrorResponseSchema", "setup_unprocessable_entity_exception_handler"]
+__all__ = [
+    "UnprocessableEntityErrorResponseSchema",
+    "setup_unprocessable_entity_exception_handler",
+]
 
 from pydantic import ConfigDict
 from starlette.requests import Request

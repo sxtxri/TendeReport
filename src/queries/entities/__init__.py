@@ -1,2 +1,2 @@
-from .tender import *
 from .base import *
+from .tender import *

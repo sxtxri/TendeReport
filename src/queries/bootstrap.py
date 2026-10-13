@@ -1,11 +1,9 @@
 import functools
 
-from queries.repositories import TenderRepository
+from infrastructure.db.repositories import PostgresTenderRepository
 from queries.services import TenderService
 
 
 @functools.cache
 def get_tender_service() -> TenderService:
-    return TenderService(
-        tender_repository=TenderRepository()
-    )
+    return TenderService(tender_repository=PostgresTenderRepository())

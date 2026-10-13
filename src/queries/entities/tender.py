@@ -1,11 +1,13 @@
 __all__ = ["Tender"]
 
-from queries.entities.base import Entity
-from common.types import TenderId
 from datetime import datetime
 
+from common.types import TenderId
+from queries.entities.base import Entity
+
+
 class Tender(Entity):
-    tender_id: TenderId
+    id: TenderId
 
     name: str
     company: str
@@ -14,3 +16,7 @@ class Tender(Entity):
     scoring: int | None
 
     published_at: datetime | None
+
+    @property
+    def entity_id(self) -> TenderId:
+        return self.id

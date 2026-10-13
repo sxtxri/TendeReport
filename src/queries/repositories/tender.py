@@ -1,8 +1,8 @@
 __all__ = ["BaseTenderRepository"]
 
-from queries.repositories.base import BaseRepository
 from common.types import TenderId
 from queries.entities import Tender
+from queries.repositories.base import BaseRepository
 
 
 class BaseTenderRepository(BaseRepository):
