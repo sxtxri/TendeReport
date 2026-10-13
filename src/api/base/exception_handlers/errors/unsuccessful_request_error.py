@@ -4,7 +4,7 @@ import json
 
 from pydantic import ConfigDict
 from starlette.requests import Request
-from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
+from starlette.status import HTTP_422_UNPROCESSABLE_CONTENT
 
 from api.base.exception_handlers.base import GeneralErrorInformationSchema
 from api.base.schemas.responses import ErrorAPIResponse, RefinedJSONResponse
@@ -44,15 +44,13 @@ def setup_unsuccessful_request_exception_handler(app):
             return RefinedJSONResponse(status_code=exc.status_code, content=json_msg)
         except json.JSONDecodeError:
             return RefinedJSONResponse(
-                status_code=HTTP_422_UNPROCESSABLE_ENTITY,
+                status_code=HTTP_422_UNPROCESSABLE_CONTENT,
                 content=UnSuccessfulRequestErrorResponseSchema(
                     error=GeneralErrorInformationSchema(
                         message="UnSuccessfulRequestError",
                         errors=[
                             ErrorSchema(
-                                message=(
-                                    exc.msg[-100:] if len(exc.msg) >= 100 else exc.msg
-                                ),
+                                message=(exc.msg[-100:] if len(exc.msg) >= 100 else exc.msg),
                                 reason="UnprocessableEntityError",
                             )
                         ],

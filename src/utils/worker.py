@@ -23,12 +23,8 @@ def run_worker(
     default_port: int | None = None,
 ):
     parser = ArgumentParser()
-    parser.add_argument(
-        "--host", type=str, default=default_host or settings.server.host
-    )
-    parser.add_argument(
-        "--port", type=int, default=default_port or settings.server.port
-    )
+    parser.add_argument("--host", type=str, default=default_host or settings.server.host)
+    parser.add_argument("--port", type=int, default=default_port or settings.server.port)
     parser.add_argument("--reload", action="store_true", default=False)
 
     args = parser.parse_args()

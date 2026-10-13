@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Path
 from starlette import status
 
 from api.base.schemas.responses import ErrorAPIResponse, ObjectAPIResponse
@@ -13,7 +13,7 @@ tenders_router = APIRouter()
 
 
 @tenders_router.get(
-    "/tenders/{tenderId}",
+    "/tenders/{tender_id}",
     summary="Поиск тендера по его идентификатору",
     description="Поиск тендера по его идентификатору",
     responses={
@@ -24,7 +24,7 @@ tenders_router = APIRouter()
     tags=["Тендеры"],
 )
 async def find(
-    tender_id: TenderId,
+    tender_id: Annotated[TenderId, Path(description="ID тендера")],
     service: Annotated[TenderService, Depends(get_tender_service)],
 ) -> ObjectAPIResponse[Tender] | ErrorAPIResponse:
 

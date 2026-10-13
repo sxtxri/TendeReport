@@ -6,6 +6,8 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 from sqlalchemy.ext.asyncio import AsyncEngine
 
+from infrastructure.db.models.base import ModelBase
+
 config = context.config
 
 section = config.config_ini_section
@@ -38,8 +40,6 @@ config.set_section_option(
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# TODO: пока непонятно надо ли импортировать именнно здесь
-from infrastructure.db.models.base import ModelBase  # noqa: E402
 
 target_metadata = ModelBase.metadata
 

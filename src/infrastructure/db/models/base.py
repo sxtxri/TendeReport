@@ -1,7 +1,8 @@
 __all__ = ["ModelBase"]
 
-import sqlalchemy
+from sqlalchemy import Column, Integer
+from sqlalchemy.orm import DeclarativeBase
 
 
-class ModelBase(sqlalchemy.orm.DeclarativeBase):
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+class ModelBase(DeclarativeBase):
+    id = Column(Integer, primary_key=True)

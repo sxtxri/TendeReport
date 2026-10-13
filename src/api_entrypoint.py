@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from api.base.exception_handlers.setup import setup_exception_handlers
+from api.router import main_router
 from config import settings
 from utils.debug_tools import get_module_name
 from utils.worker import run_worker
@@ -21,6 +23,11 @@ app = FastAPI(
     },
     debug=settings.DEBUG,
 )
+
+setup_exception_handlers(app)
+
+# routers
+app.include_router(main_router)
 
 
 if __name__ == "__main__":
