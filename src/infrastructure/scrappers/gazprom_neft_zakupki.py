@@ -5,8 +5,8 @@ from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 
-from common.types import ScrapperEndpoint
 from infrastructure.scrappers.base import BaseScrapper
+from infrastructure.scrappers.endpoints import ScrapperEndpoint
 
 # карточка тендера на странице листинга
 _TENDER_CARD_CLASS = "purchase-container"

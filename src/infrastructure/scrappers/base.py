@@ -7,5 +7,5 @@ class BaseScrapper:
     def __init__(self, client: MonitoredClientMixin):
         self.client = client
 
-    async def parse(self) -> str:
+    async def scrape(self) -> str:
         raise NotImplementedError

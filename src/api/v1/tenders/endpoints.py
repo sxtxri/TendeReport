@@ -10,6 +10,8 @@ from api.base.schemas.responses import (
     ObjectAPIResponse,
 )
 from common.types import TenderId
+from integration.bootstrap import get_tender_integration_service
+from integration.services import TenderIntegrationService
 from queries.bootstrap import get_tender_service
 from queries.entities import Tender
 from queries.services import TenderService
@@ -92,3 +94,21 @@ async def get_cities(
     cities: list[str] = await service.get_cities()
 
     return ObjectAPIResponse(data=cities)
+
+
+@tenders_router.post(
+    "/tenders:integrate",
+    summary="Запуск интеграции данных по тендерам",
+    description="Запуск интеграции данных по тендерам",
+    status_code=status.HTTP_202_ACCEPTED,
+    responses={
+        status.HTTP_202_ACCEPTED: {"model": None},
+        status.HTTP_422_UNPROCESSABLE_CONTENT: {"model": ErrorAPIResponse},
+        status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": ErrorAPIResponse},
+    },
+    tags=["Тендеры"],
+)
+async def integrate_tenders(
+    service: Annotated[TenderIntegrationService, Depends(get_tender_integration_service)],
+) -> None:
+    await service.integrate()
