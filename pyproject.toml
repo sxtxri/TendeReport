@@ -22,7 +22,11 @@ dependencies = [
     "pytest-alembic (>=0.13.1,<0.14.0)",
     "yarl (>=1.25.1,<2.0.0)",
     "sqlalchemy-utils (>=0.43.0,<0.44.0)",
-    "pytest-asyncio (>=1.4.0,<2.0.0)"
+    "pytest-asyncio (>=1.4.0,<2.0.0)",
+    "beautifulsoup4 (>=4.15.0,<5.0.0)",
+    "lxml (>=6.1.0,<7.0.0)",
+    "isort (>=9.0.2,<10.0.0)",
+    "flake8 (>=7.4.1,<8.0.0)"
 ]
 
 

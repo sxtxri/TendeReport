@@ -38,6 +38,7 @@ class ItemsAPIResponse(BaseCamelCaseSchema, Generic[DataT]):
     items_per_page: int | None = None
     start_index: int | None = None
     current_item_count: int | None = None
+    total_results: int | None = None
 
     @model_validator(mode="after")
     def calculate_items_count(self):
