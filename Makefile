@@ -12,7 +12,7 @@ run_api_worker:
 	poetry run python src/api_entrypoint.py --reload
 
 run_lint:
-	poetry run python -m isort . && poetry run python -m flake8 src/ tests/ --ignore=ASYNC9,ASYNC102,ASYNC120
+	poetry run python -m isort . && poetry run python -m flake8 src/ tests/ --extend-ignore=ASYNC9,ASYNC102,ASYNC120
 
 # создать миграции
 makemigration:

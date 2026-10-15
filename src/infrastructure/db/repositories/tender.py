@@ -1,6 +1,7 @@
 __all__ = ["PostgresTenderRepository"]
 
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 
 from common.types import TenderId
 from infrastructure.db.factories import TenderFactory
@@ -13,7 +14,11 @@ from queries.repositories import BaseTenderRepository
 class PostgresTenderRepository(BaseTenderRepository):
     async def get_tender(self, tender_id: TenderId) -> Tender | None:
         async with get_db_session() as session:
-            sql = select(TenderModel).where(TenderModel.id == tender_id)
+            sql = (
+                select(TenderModel)
+                .where(TenderModel.id == tender_id)
+                .options(selectinload(TenderModel.division))
+            )
             result = (await session.scalars(sql)).one_or_none()
 
             return TenderFactory.orm_to_domain(result) if result else None
