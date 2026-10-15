@@ -17,13 +17,7 @@ _TENDER_LINK_CLASS = "purchase-number"
 class GazpromNeftZakupkiScrapper(BaseScrapper):
     ENDPOINT = ScrapperEndpoint.GAZPROM_NEFT_ZAKUPKI
 
-    async def parse_page(self) -> list[str]:
-        """
-        Пройтись по страницам листинга (?PAGE=1, 2, 3, ...) и собрать их HTML.
-        Остановиться, как только на очередной странице не нашлось ни одной карточки тендера
-            (номер последней страницы в пагинации сайта скрыт за "...", поэтому полагаемся
-            на фактическое наличие карточек, а не на код ответа - сайт всегда отвечает 200).
-        """
+    async def scrape_page(self) -> list[str]:
         pages: list[str] = []
         page_number = 1
 
@@ -40,11 +34,8 @@ class GazpromNeftZakupkiScrapper(BaseScrapper):
 
         return pages
 
-    async def parse_single_tender(self) -> list[str]:
-        """
-        Собрать HTML детальных страниц всех тендеров со всех страниц листинга.
-        """
-        tender_urls = [url for page_html in await self.parse_page() for url in self._extract_tender_urls(page_html)]
+    async def scrape_item(self) -> list[str]:
+        tender_urls = [url for page_html in await self.scrape_page() for url in self._extract_tender_urls(page_html)]
 
         tenders_html = []
         for tender_url in tender_urls:

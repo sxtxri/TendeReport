@@ -24,6 +24,12 @@ class ServerSettings(ConfigSettings):
     model_config = SettingsConfigDict(env_prefix="SERVER_")
 
 
+class ScrapperSettings(ConfigSettings):
+    USER_AGENT: str = (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"
+    )
+
+
 class Settings(ConfigSettings):
     SERVICE_NAME: str
     ENV: str = Field("local", alias="ENVIRONMENT")
@@ -48,6 +54,9 @@ class Settings(ConfigSettings):
 
     # Настройки сервера
     server: ServerSettings = Field(default_factory=ServerSettings)
+
+    # Настройки скрэпперов
+    scrapper: ScrapperSettings = Field(default_factory=ScrapperSettings)
 
     @property
     def is_local(self) -> bool:
