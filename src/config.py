@@ -1,4 +1,5 @@
 import os
+from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
@@ -30,6 +31,20 @@ class ScrapperSettings(ConfigSettings):
     )
 
 
+class NotificationClientType(StrEnum):
+
+    FAKE = "fake"
+    VK = "vk"
+
+
+class NotificationSettings(ConfigSettings):
+    CLIENT: NotificationClientType = NotificationClientType.FAKE
+    VK_TOKEN: str = ""
+    VK_PEER_ID: str = ""
+    VK_API_VERSION: str = "5.199"
+    model_config = SettingsConfigDict(env_prefix="NOTIFICATION_")
+
+
 class Settings(ConfigSettings):
     SERVICE_NAME: str
     ENV: str = Field("local", alias="ENVIRONMENT")
@@ -52,14 +67,24 @@ class Settings(ConfigSettings):
     POSTGRES_TEST_DSN: str | None = None
     APPLY_MIGRATIONS_FOR_TESTS: bool = True
 
+    # Notification settings
+    NOTIFICATION_CLIENT: NotificationClientType = NotificationClientType.FAKE
+    VK_TOKEN: str = ""
+    VK_PEER_ID: str = ""
+    VK_API_VERSION: str = "5.199"
+
     # Настройки сервера
     server: ServerSettings = Field(default_factory=ServerSettings)
 
     # Настройки скрэпперов
     scrapper: ScrapperSettings = Field(default_factory=ScrapperSettings)
 
+    # Настройки уведомлений
+    notification: NotificationSettings = Field(default_factory=NotificationSettings)
+
     @property
     def is_local(self) -> bool:
+
         return self.ENV == "local"
 
     @property
