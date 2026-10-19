@@ -20,3 +20,11 @@ class UnSuccessfulRequestError(BaseError):
 
 class InvalidResponseError(BaseError):
     """Запрос прошёл успешно, тело ответа отличается от схемы"""
+
+
+class NotificationError(BaseError):
+    """Ошибка при отправке уведомления"""
+
+
+class VkNotificationError(NotificationError):
+    """Ошибка при отправке уведомления через VK API"""
