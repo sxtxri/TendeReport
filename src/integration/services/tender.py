@@ -2,6 +2,7 @@ __all__ = ["TenderIntegrationService"]
 
 from infrastructure.scrappers import BaseScrapper
 from queries.repositories import BaseTenderRepository
+from utils.async_tools import run_concurrent
 
 
 class TenderIntegrationService:
@@ -14,4 +15,12 @@ class TenderIntegrationService:
         self._scrappers = scrappers
 
     async def integrate(self) -> None:
-        raise NotImplementedError
+        await self._tender_repository.mark_all_need_deleted()
+        await self._integrate()
+        await self._tender_repository.delete_all_need_deleted()
+
+    async def _integrate(self) -> None:
+        tasks = []
+        for scrapper in self._scrappers:
+            tasks.append(scrapper.scrape())
+        await run_concurrent(*tasks)

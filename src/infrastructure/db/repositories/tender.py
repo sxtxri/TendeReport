@@ -2,7 +2,7 @@ __all__ = ["PostgresTenderRepository"]
 
 from datetime import date
 
-from sqlalchemy import func, select
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.orm import selectinload
 
 from common.types import TenderId
@@ -72,6 +72,20 @@ class PostgresTenderRepository(BaseTenderRepository):
             result = (await session.scalars(sql)).all()
 
             return list(result)
+
+    async def mark_all_need_deleted(self) -> None:
+        async with get_db_session() as session:
+            sql = update(TenderModel).values({TenderModel.need_deleted: True})
+            await session.execute(sql)
+
+            await session.commit()
+
+    async def delete_all_need_deleted(self) -> None:
+        async with get_db_session() as session:
+            sql = delete(TenderModel).where(TenderModel.need_deleted.is_(True))
+            await session.execute(sql)
+
+            await session.commit()
 
     @staticmethod
     def _apply_filters(
