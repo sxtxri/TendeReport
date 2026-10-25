@@ -39,7 +39,7 @@ class PostgresTenderRepository(BaseTenderRepository):
                     application_deadline_to=application_deadline_to,
                     is_price_defined=is_price_defined,
                 )
-                .orderby(TenderModel.id)
+                .order_by(TenderModel.id)
                 .limit(limit)
                 .offset(offset)
             )
