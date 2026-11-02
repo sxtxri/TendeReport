@@ -33,3 +33,9 @@ class BaseTenderRepository(BaseRepository):
 
     async def get_cities(self) -> list[str]:
         raise NotImplementedError
+
+    async def mark_all_need_deleted(self) -> None:
+        raise NotImplementedError
+
+    async def delete_all_need_deleted(self) -> None:
+        raise NotImplementedError

@@ -2,7 +2,17 @@ __all__ = ["TenderModel"]
 
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, Integer, Numeric, String, Text, func
+from sqlalchemy import (
+    Boolean,
+    DateTime,
+    ForeignKey,
+    Integer,
+    Numeric,
+    String,
+    Text,
+    false,
+    func,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from infrastructure.db.models.base import ModelBase
@@ -78,6 +88,14 @@ class TenderModel(ModelBase):
         Integer,
         nullable=True,
         comment="Скоринг (оценка релевантности) тендера",
+    )
+
+    need_deleted: Mapped[bool] = mapped_column(
+        Boolean,
+        default=False,
+        server_default=false(),
+        nullable=False,
+        comment="Тендер помечен к удалению как отсутствующий на площадке",
     )
 
     created_at: Mapped[datetime] = mapped_column(

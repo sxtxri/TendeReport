@@ -7,6 +7,9 @@ class BaseScrapper:
     def __init__(self, client: MonitoredClientMixin):
         self.client = client
 
+    async def scrape(self) -> str:
+        raise NotImplementedError
+
     async def scrape_page(self) -> str:
         raise NotImplementedError
 
