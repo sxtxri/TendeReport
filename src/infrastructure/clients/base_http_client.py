@@ -15,6 +15,7 @@ class MonitoredClientMixin(AsyncClient):
 
         headers = kwargs.pop("headers", None) or {}
         kwargs["headers"] = headers
+        kwargs.setdefault("follow_redirects", True)
 
         super().__init__(*args, **kwargs)
 

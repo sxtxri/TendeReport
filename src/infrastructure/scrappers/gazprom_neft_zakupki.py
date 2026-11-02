@@ -17,6 +17,9 @@ _TENDER_LINK_CLASS = "purchase-number"
 class GazpromNeftZakupkiScrapper(BaseScrapper):
     ENDPOINT = ScrapperEndpoint.GAZPROM_NEFT_ZAKUPKI
 
+    async def scrape(self) -> list[str]:
+        return await self.scrape_item()
+
     async def scrape_page(self) -> list[str]:
         pages: list[str] = []
         page_number = 1
