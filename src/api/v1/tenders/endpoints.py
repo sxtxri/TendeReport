@@ -10,8 +10,7 @@ from api.base.schemas.responses import (
     ObjectAPIResponse,
 )
 from common.types import TenderId
-from integration.bootstrap import get_tender_integration_service
-from integration.services import TenderIntegrationService
+from integration.tasks import integrate_tenders_task
 from queries.bootstrap import get_tender_service
 from queries.entities import Tender
 from queries.services import TenderService
@@ -108,7 +107,5 @@ async def get_cities(
     },
     tags=["Тендеры"],
 )
-async def integrate_tenders(
-    service: Annotated[TenderIntegrationService, Depends(get_tender_integration_service)],
-) -> None:
-    await service.integrate()
+async def integrate_tenders() -> None:
+    integrate_tenders_task.delay()

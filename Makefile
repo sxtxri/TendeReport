@@ -11,6 +11,10 @@ install_all_deps:
 run_api_worker:
 	poetry run python src/api_entrypoint.py --reload
 
+run_celery_worker:
+	cd src; \
+	poetry run celery -A worker:celery_app worker --loglevel=info
+
 run_lint:
 	poetry run python -m isort . && poetry run python -m flake8 src/ tests/ --extend-ignore=ASYNC9,ASYNC102,ASYNC120
 

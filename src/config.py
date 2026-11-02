@@ -38,6 +38,12 @@ class NotificationSettings(ConfigSettings):
     model_config = SettingsConfigDict(env_prefix="NOTIFICATION_")
 
 
+class CelerySettings(ConfigSettings):
+    BROKER_URL: str = "redis://localhost:6379/0"
+    RESULT_BACKEND: str = "redis://localhost:6379/1"
+    model_config = SettingsConfigDict(env_prefix="CELERY_")
+
+
 class Settings(ConfigSettings):
     SERVICE_NAME: str
     ENV: str = Field("local", alias="ENVIRONMENT")
@@ -68,6 +74,9 @@ class Settings(ConfigSettings):
 
     # Настройки уведомлений
     notification: NotificationSettings = Field(default_factory=NotificationSettings)
+
+    # Настройки Celery
+    celery: CelerySettings = Field(default_factory=CelerySettings)
 
     @property
     def is_local(self) -> bool:
