@@ -3,11 +3,11 @@ import functools
 from common.telemetry import HttpMetricsClientType
 from config import settings
 from infrastructure.clients.base_http_client import MonitoredClientMixin
-from infrastructure.clients.notification.base import BaseNotificationClient
-from infrastructure.clients.notification.factory import ClientNotificationFactory
 from infrastructure.db.repositories import PostgresTenderRepository
+from infrastructure.notification.clients import BaseNotificationClient
+from infrastructure.notification.factory import NotificationClientFactory
+from infrastructure.notification.service import NotificationService
 from infrastructure.scrappers import BaseScrapper, GazpromNeftZakupkiScrapper
-from integration.services.notification import NotificationService
 from integration.services.tender import TenderIntegrationService
 
 
@@ -25,7 +25,7 @@ def get_gazprom_neft_zakupki() -> BaseScrapper:
 
 @functools.cache
 def get_notification_client() -> BaseNotificationClient:
-    return ClientNotificationFactory.create()
+    return NotificationClientFactory.build()
 
 
 @functools.cache

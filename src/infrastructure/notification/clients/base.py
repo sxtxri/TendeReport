@@ -1,16 +1,12 @@
 __all__ = ["BaseNotificationClient"]
 
-import abc
+from abc import ABC, abstractmethod
 
 
-class BaseNotificationClient(abc.ABC):
+class BaseNotificationClient(ABC):
     """Базовый абстрактный клиент для отправки уведомлений."""
 
-    @abc.abstractmethod
+    @abstractmethod
     async def send_message(self, message: str) -> None:
         """Отправить сообщение получателю."""
         raise NotImplementedError
-
-    async def send_notification(self, message: str) -> None:
-        """Отправить уведомление."""
-        await self.send_message(message)

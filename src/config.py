@@ -1,5 +1,4 @@
 import os
-from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
@@ -31,14 +30,8 @@ class ScrapperSettings(ConfigSettings):
     )
 
 
-class NotificationClientType(StrEnum):
-
-    FAKE = "fake"
-    VK = "vk"
-
-
 class NotificationSettings(ConfigSettings):
-    CLIENT: NotificationClientType = NotificationClientType.FAKE
+    CLIENT: str = "fake"
     VK_TOKEN: str = ""
     VK_PEER_ID: str = ""
     VK_API_VERSION: str = "5.199"
@@ -66,12 +59,6 @@ class Settings(ConfigSettings):
     POSTGRES_TEST_DB_NAME: str | None = None
     POSTGRES_TEST_DSN: str | None = None
     APPLY_MIGRATIONS_FOR_TESTS: bool = True
-
-    # Notification settings
-    NOTIFICATION_CLIENT: NotificationClientType = NotificationClientType.FAKE
-    VK_TOKEN: str = ""
-    VK_PEER_ID: str = ""
-    VK_API_VERSION: str = "5.199"
 
     # Настройки сервера
     server: ServerSettings = Field(default_factory=ServerSettings)

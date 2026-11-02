@@ -8,8 +8,8 @@ from httpx import Response
 
 from common.telemetry import HttpMetricsClientType
 from infrastructure.clients.base_http_client import MonitoredClientMixin
-from infrastructure.clients.errors import VkNotificationError
-from infrastructure.clients.notification.base import BaseNotificationClient
+from infrastructure.notification.clients.base import BaseNotificationClient
+from infrastructure.notification.errors import VkNotificationError
 
 logger = structlog.get_logger(__name__)
 
@@ -61,11 +61,6 @@ class VkNotificationClient(BaseNotificationClient, MonitoredClientMixin):
             )
             raise VkNotificationError(f"VK API error [{error_code}]: {error_msg}")
 
-        logger.info(
-            "VK message sent successfully",
-            peer_id=self._peer_id,
-            message_id=data.get("response"),
-        )
         return data
 
     async def _send_request(self, payload: dict[str, Any]) -> Response:

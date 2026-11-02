@@ -1,7 +1,7 @@
 __all__ = ["TenderIntegrationService"]
 
+from infrastructure.notification.service import NotificationService
 from infrastructure.scrappers import BaseScrapper
-from integration.services.notification import NotificationService
 from queries.repositories import BaseTenderRepository
 
 
@@ -10,7 +10,7 @@ class TenderIntegrationService:
         self,
         tender_repository: BaseTenderRepository,
         scrappers: list[BaseScrapper],
-        notification_service: NotificationService | None = None,
+        notification_service: NotificationService,
     ):
         self._tender_repository = tender_repository
         self._scrappers = scrappers
@@ -23,7 +23,6 @@ class TenderIntegrationService:
             except Exception:
                 pass
 
-        if self._notification_service is not None:
-            await self._notification_service.send_notification(
-                "Интеграция данных по тендерам успешно завершена"
-            )
+        await self._notification_service.send_notification(
+            "Интеграция данных по тендерам успешно завершена"
+        )
