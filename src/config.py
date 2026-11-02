@@ -30,6 +30,14 @@ class ScrapperSettings(ConfigSettings):
     )
 
 
+class NotificationSettings(ConfigSettings):
+    CLIENT: str = "fake"
+    VK_TOKEN: str = ""
+    VK_PEER_ID: str = ""
+    VK_API_VERSION: str = "5.199"
+    model_config = SettingsConfigDict(env_prefix="NOTIFICATION_")
+
+
 class Settings(ConfigSettings):
     SERVICE_NAME: str
     ENV: str = Field("local", alias="ENVIRONMENT")
@@ -58,8 +66,12 @@ class Settings(ConfigSettings):
     # Настройки скрэпперов
     scrapper: ScrapperSettings = Field(default_factory=ScrapperSettings)
 
+    # Настройки уведомлений
+    notification: NotificationSettings = Field(default_factory=NotificationSettings)
+
     @property
     def is_local(self) -> bool:
+
         return self.ENV == "local"
 
     @property
